@@ -1,0 +1,316 @@
+@prefix : <http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie> .
+
+<http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie> rdf:type owl:Ontology ;
+                                                                         rdfs:comment "Dieses Projekt soll eine Ontologie bereitstellen, die beschreibt, welchen Ursprung/Inspiration die Pokémon haben."@de ,
+                                                                                      "This project aims to provide an ontology that describes the origin/inspiration of the Pokémon."@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#evolvesInto
+:evolvesInto rdf:type owl:ObjectProperty ;
+             owl:inverseOf :hasPrevolution ;
+             rdf:type owl:TransitiveProperty ;
+             rdfs:domain :Pokemon ;
+             rdfs:range :Pokemon .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasCategory
+:hasCategory rdf:type owl:ObjectProperty ;
+             owl:inverseOf :hasPokemonWithCategory ;
+             rdfs:domain :Pokemon ;
+             rdfs:range :Category .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasPokemonWithCategory
+:hasPokemonWithCategory rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Category ;
+                        rdfs:range :Pokemon .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasPokemonWithType
+:hasPokemonWithType rdf:type owl:ObjectProperty ;
+                    owl:inverseOf :hasType ;
+                    rdfs:domain :Type ;
+                    rdfs:range :Pokemon .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasPrevolution
+:hasPrevolution rdf:type owl:ObjectProperty ,
+                         owl:TransitiveProperty ;
+                rdfs:domain :Pokemon ;
+                rdfs:range :Pokemon .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasType
+:hasType rdf:type owl:ObjectProperty ;
+         rdfs:domain :Pokemon ;
+         rdfs:range :Type .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#NationalDexID
+:NationalDexID rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Pokemon ;
+               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#artwork
+:artwork rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Pokemon ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#color
+:color rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Pokemon ;
+       rdfs:range xsd:anyURI .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#hasOrigin
+:hasOrigin rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Pokemon ;
+           rdfs:range xsd:anyURI .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#height_m
+:height_m rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Pokemon ;
+          rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#weight_kg
+:weight_kg rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Pokemon ;
+           rdfs:range xsd:decimal .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Category
+:Category rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Pokemon
+:Pokemon rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Type
+:Type rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Bug
+:Bug rdf:type owl:NamedIndividual ,
+              :Type ;
+     rdfs:label "Bug"@en ,
+                "Käfer"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Bulbasaur
+:Bulbasaur rdf:type owl:NamedIndividual ,
+                    :Pokemon ;
+           :evolvesInto :Ivysaur ;
+           :hasCategory :Seed_Pokémon ;
+           :hasType :Grass ,
+                    :Poison ;
+           :NationalDexID 1 ;
+           :artwork "https://www.pokewiki.de/images/9/96/Sugimori_001.png" ;
+           :color "https://www.wikidata.org/wiki/Q3133"^^xsd:anyURI ;
+           :hasOrigin "https://www.wikidata.org/wiki/Q131682" ,
+                      "https://www.wikidata.org/wiki/Q188748" ,
+                      "https://www.wikidata.org/wiki/Q322241" ,
+                      "https://www.wikidata.org/wiki/Q55372" ;
+           :height_m 0.7 ;
+           :weight_kg 6.9 ;
+           rdfs:label "Bisasam"@de ,
+                      "Bulbasaur"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Dark
+:Dark rdf:type owl:NamedIndividual ,
+               :Type ;
+      rdfs:label "Dark"@en ,
+                 "Unlicht"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Dragon
+:Dragon rdf:type owl:NamedIndividual ,
+                 :Type ;
+        rdfs:label "Drache"@de ,
+                   "Dragon"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Electric
+:Electric rdf:type owl:NamedIndividual ,
+                   :Type ;
+          rdfs:label "Electric"@en ,
+                     "Elektro"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Fairy
+:Fairy rdf:type owl:NamedIndividual ,
+                :Type ;
+       rdfs:label "Fairy"@en ,
+                  "Fee"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Fighting
+:Fighting rdf:type owl:NamedIndividual ,
+                   :Type ;
+          rdfs:label "Fighting"@en ,
+                     "Kampf"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Fire
+:Fire rdf:type owl:NamedIndividual ,
+               :Type ;
+      rdfs:label "Feuer"@de ,
+                 "Fire"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Flying
+:Flying rdf:type owl:NamedIndividual ,
+                 :Type ;
+        rdfs:label "Flug"@de ,
+                   "Flying"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Ghost
+:Ghost rdf:type owl:NamedIndividual ,
+                :Type ;
+       rdfs:label "Geist"@de ,
+                  "Ghost"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Grass
+:Grass rdf:type owl:NamedIndividual ,
+                :Type ;
+       rdfs:label "Grass"@en ,
+                  "Pflanze"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Ground
+:Ground rdf:type owl:NamedIndividual ,
+                 :Type ;
+        rdfs:label "Boden"@de ,
+                   "Ground"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Ice
+:Ice rdf:type owl:NamedIndividual ,
+              :Type ;
+     rdfs:label "Eis"@de ,
+                "Ice"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Ivysaur
+:Ivysaur rdf:type owl:NamedIndividual ,
+                  :Pokemon ;
+         :evolvesInto :Venusaur ;
+         :hasCategory :Seed_Pokémon ;
+         :hasPrevolution :Bulbasaur ;
+         :hasType :Grass ,
+                  :Poison ;
+         :NationalDexID 2 ;
+         :artwork "https://www.pokewiki.de/images/4/47/Sugimori_002.png"^^xsd:string ;
+         :color "https://www.wikidata.org/wiki/Q3133"^^xsd:anyURI ;
+         :hasOrigin "https://www.wikidata.org/wiki/Q131682" ,
+                    "https://www.wikidata.org/wiki/Q322241" ,
+                    "https://www.wikidata.org/wiki/Q55372" ,
+                    "https://www.wikidata.org/wiki/Q64140922" ;
+         :height_m 1.0 ;
+         :weight_kg 13.0 ;
+         rdfs:label "Bisaknosp"@de ,
+                    "Ivysaur"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Normal
+:Normal rdf:type owl:NamedIndividual ,
+                 :Type ;
+        rdfs:label "Normal"@de ,
+                   "Normal"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Poison
+:Poison rdf:type owl:NamedIndividual ,
+                 :Type ;
+        rdfs:label "Gift"@de ,
+                   "Poison"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Psychic
+:Psychic rdf:type owl:NamedIndividual ,
+                  :Type ;
+         rdfs:label "Psychic"@en ,
+                    "Psycho"@de .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Rock
+:Rock rdf:type owl:NamedIndividual ,
+               :Type ;
+      rdfs:label "Gestein"@de ,
+                 "Rock"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Seed_Pokémon
+:Seed_Pokémon rdf:type owl:NamedIndividual ,
+                       :Category ;
+              :hasPokemonWithCategory :Bulbasaur ,
+                                      :Ivysaur ,
+                                      :Venusaur ;
+              rdfs:label "Samen-Pokémon"@de ,
+                         "Seed Pokémon"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Steel
+:Steel rdf:type owl:NamedIndividual ,
+                :Type ;
+       rdfs:label "Stahl"@de ,
+                  "Steel"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Venusaur
+:Venusaur rdf:type owl:NamedIndividual ,
+                   :Pokemon ;
+          :hasCategory :Seed_Pokémon ;
+          :hasPrevolution :Ivysaur ;
+          :hasType :Grass ,
+                   :Poison ;
+          :NationalDexID 3 ;
+          :artwork "https://www.pokewiki.de/images/1/19/Sugimori_003.png" ;
+          :color "https://www.wikidata.org/wiki/Q3133"^^xsd:anyURI ;
+          :hasOrigin "https://www.wikidata.org/wiki/Q131682" ,
+                     "https://www.wikidata.org/wiki/Q161888" ,
+                     "https://www.wikidata.org/wiki/Q322241" ,
+                     "https://www.wikidata.org/wiki/Q457871" ,
+                     "https://www.wikidata.org/wiki/Q55372" ;
+          :height_m 2.0 ;
+          :weight_kg 100.0 ;
+          rdfs:label "Bisaflor"@de ,
+                     "Venusaur"@en .
+
+
+###  http://www.semanticweb.org/twahm/ontologies/2021/7/pokemon-etymologie#Water
+:Water rdf:type owl:NamedIndividual ,
+                :Type ;
+       rdfs:label "Wasser"@de ,
+                  "Water"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
