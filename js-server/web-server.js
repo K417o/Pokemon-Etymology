@@ -12,7 +12,7 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 });
 
-// Details about a specific Pkmn url-example .../pokemon/Bisasam?lang=de
+// Details about a specific Pkmn url-example .../pokemon/Bisasam
 app.get("/pokemon/:pkmn", (req, res, next) => {
   let name = req.params.pkmn;
   if (!name || name === "all") {
@@ -58,17 +58,7 @@ app.get("/pokemon", (req, res) => {
   let category = req.query.category; // kann nur eine Kategorie haben --> UNION
   //let origin = req.query.origin; erstmal eh nicht machbar
 
-
-
-    if (Array.isArray(type)) {
-      if (req.query.strict == "true") {
-        filterBy.typesStrict(res, type);
-      } else {
-        filterBy.typesNotStrict(res, type);
-      }
-    } else {
-      filterBy.singleType(res, type);
-    }
-
-  
+  let query = filterBy.buildQuery(type, strict, colour, category, res);  
+console.log(query);
+  filterBy.getResponse(query, res);
 });
