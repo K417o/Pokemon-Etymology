@@ -20,7 +20,7 @@ const conn = new Connection({
  */
 
 module.exports = {
-  getDetailsAboutOneSpecific: function (res, pkmnName, lang) {
+  getDetailsAboutOneSpecific: function (res, pkmnName) {
     const spQuery = `
           PREFIX owl:  <http://www.w3.org/2002/07/owl#>
           PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -31,7 +31,7 @@ module.exports = {
           PREFIX qudt: <http://qudt.org/schema/qudt/>
 
           SELECT ?name ?type ?colour ?genus ?height ?weight where  {
-              ?pkmn rdfs:label "` + pkmnName + `"@` + lang + ` ;
+              ?pkmn rdfs:label "` + pkmnName + `"@` + config.language + ` ;
                     rdfs:label ?name ;
                     poke:hasGenus ?genus ;
                     poke:hasType ?type ;
@@ -46,9 +46,9 @@ module.exports = {
               ?qudtW qudt:quantityValue ?valueW.
               ?valueW qudt:value ?weight .
     
-              FILTER(lang(?colour)='` + lang + `')
-              FILTER(lang(?name)='` + lang + `')
-              FILTER(lang(?genus)='` + lang + `')
+              FILTER(lang(?colour)='` + config.language + `')
+              FILTER(lang(?name)='` + config.language + `')
+              FILTER(lang(?genus)='` + config.language + `')
           }`
 
     query.execute(conn, config.dbName, spQuery, 'application/sparql-results+json', {

@@ -1,0 +1,51 @@
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX poke: <https://pokemonkg.org/ontology#>
+PREFIX dbpedia:	<http://dbpedia.org/resource/>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+
+#get_all_Pokemon
+SELECT * WHERE { ?pokemon rdf:type poke:Species }
+
+#get_all_Types
+SELECT DISTINCT ?type where  {
+    ?x poke:hasType ?type .
+}
+
+#get_Details_about_one_Pokemon
+SELECT ?name ?type ?colour ?genus ?height ?weight where  {
+    ?pkmn rdfs:label "Persian"@en ;
+          rdfs:label ?name ;
+          poke:hasGenus ?genus ;
+          poke:hasType ?type ;
+          poke:hasHeight ?qudtH ;
+          poke:hasWeight ?qudtW ;
+          poke:hasColour ?colourDbp .     
+          SERVICE <http://dbpedia.org/sparql>{
+                ?colourDbp rdfs:label ?colour    
+          }
+    ?qudtH qudt:quantityValue ?valueH.
+    ?valueH qudt:value ?height .
+    ?qudtW qudt:quantityValue ?valueW.
+    ?valueW qudt:value ?weight .
+    
+    FILTER(lang(?colour)='de')
+    FILTER(lang(?name)='de')
+    FILTER(lang(?genus)='de')
+}
+
+#get_Pokemon_BY_Colour
+SELECT * WHERE {
+    ?pokemon a poke:Species.
+    ?pokemon poke:hasColour dbpedia:Blue.
+    ?pokemon rdfs:label ?name.
+   FILTER ( langMATCHES( LANG(?name), "de") )
+}
+
+#get_Pokémon_By_Type
+SELECT * WHERE {
+    ?pokemon a poke:Species.
+    ?pokemon poke:hasType poke:Pok��Type:Dark
+}

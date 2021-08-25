@@ -1,0 +1,20 @@
+.pkmn-card {
+    min-width: 50%;
+}
+
+img.d-block {
+    width: 100px;
+    height: auto;
+}
+
+img.type {
+    width: 30px;
+    height: auto;
+}
+
+.type-Icons {
+    float: right;
+}
+.type1, .type2 {
+    display: inline-block;
+}
