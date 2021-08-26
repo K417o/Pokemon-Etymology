@@ -18,3 +18,7 @@ img.type {
 .type1, .type2 {
     display: inline-block;
 }
+
+.pkmn-card-container {
+    padding: 5px !important;
+}

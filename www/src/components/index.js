@@ -1,5 +1,5 @@
-import CountrySelector from "./countrySelector/CountrySelector";
+import MultipleSelect from "./selectComponents/MultipleSelect";
 import PkmnCard from "./PkmnCard/PkmnCard";
-import LanguageSelector from "./languageSelector/LanguageSelector";
+import SingleSelect from "./selectComponents/SingleSelect";
 
-export {CountrySelector, PkmnCard, LanguageSelector};
+export {MultipleSelect, SingleSelect, PkmnCard};

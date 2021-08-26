@@ -1,38 +1,30 @@
-import MovieContent from '../MovieContent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import React, { useState, useMemo } from 'react';
-import countryList from 'react-select-country-list';
+import React from 'react';
 import "./styles.css";
-import {languagesNames} from "./languages";
 
-class LanguageSelector extends React.Component {
+
+class SingleSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selected: []
     }
-
-
   }
 
-  
-
   render() {
-    console.log(languagesNames);
     return (
       <>
         <Form.Group>
-          <Typeahead ref="select"
-            id="basic-typeahead-single"
+          <Typeahead
+            id={this.props.name + "Select"}
             labelKey="name"
-            multiple
             onChange={(selected) => {
               this.setState({selected});
             }}
-            options={languagesNames}
-            placeholder="Choose one or more languages..."
+            options={this.props.options}
+            placeholder={"Choose one " + this.props.name}
             selected={this.state.selected}
           />
         </Form.Group>
@@ -40,6 +32,6 @@ class LanguageSelector extends React.Component {
   };
 }
 
-export default LanguageSelector
+export default SingleSelect
 
 

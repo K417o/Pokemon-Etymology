@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import './cards.css';
 import dark from '../images/type-icons/Pokémon_Dark_Type_Icon.svg';
 import poison from '../images/type-icons/Pokémon_Poison_Type_Icon.svg';
+import { typeIcons } from '../images/type-icons';
 import Collapse from 'react-bootstrap/Collapse';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
@@ -14,61 +15,26 @@ class PkmnCard extends React.Component {
     this.state = {
       open: false
     }
+    this.getTypeIcons = this.getTypeIcons.bind(this);
   }
-  //"https://www.pokewiki.de/images/4/46/Sugimori_487a.png"
 
-  /**
-   * 
-   * <div 
-          className="pkmn-card" 
-          onClick={() => {this.setState({open: !this.state.open})}}
-          aria-controls={"example-collapse-text-" + this.props.name}
-          aria-expanded={this.state.open}>
-            <div
-              className="country-card-container border-gray rounded border mx-2 my-3 d-flex flex-row align-items-center p-0 bg-light"
-            >
-              <div className=" position-relative border-gray border-right px-2 bg-white rounded-left">
-                <img
-                  src="https://www.pokewiki.de/images/4/46/Sugimori_487a.png"
-                  className="d-block h-100"
-                  alt={this.props.name + " Artwork"}
-                />
-              </div>
-              
-              <div className="px-3 details">
-                <span className="country-name text-dark d-block font-weight-bold">
-                  {this.props.name}
-                </span>
-                <span className="country-region text-secondary">
-                  Wandler - Pokémon
-                </span>
-                <br/>
-                <span className="country-region text-secondary ">
-                  {"Größe: 1m"}
-                </span>
-                {"\t"}
-                <span className="country-region text-secondary ">
-                  {"Gewicht: 1kg"}
-                </span>
-              </div>
-              <div className="border-gray border-right px-2 ">
-                <img
-                  src={dark}
-                  className="d-block type"
-                  alt={this.props.name + " Artwork"}
-                />
-              </div>
-              <div className="border-gray border-right px-2 ">
-                <img
-                  src={poison}
-                  className="d-block type"
-                  alt={this.props.name + " Artwork"}
-                />
-              </div>
-            </div>
-          </div>
-   * 
-   */
+  getTypeIcons = () => {
+    let icons = []
+    if (!!this.props.type) {
+      this.props.type.map((type) => {
+        icons.push(
+          <img
+            src={typeIcons[type]}
+            className="type"
+            alt={this.props.name + " Artwork"}
+          />
+        );
+      });
+    }
+
+    return icons;
+  }
+
   render() {
     return (
       <Fragment>
@@ -78,7 +44,7 @@ class PkmnCard extends React.Component {
           aria-controls={"example-collapse-text-" + this.props.name}
           aria-expanded={this.state.open}>
           <div
-            className="country-card-container border-gray rounded border mx-2 my-3 d-flex flex-row align-items-center p-0 bg-light"
+            className="pkmn-card-container border-gray rounded border mx-2 my-3 d-flex flex-row align-items-center p-0 bg-light"
           >
             <Container>
               <Row>
@@ -95,29 +61,20 @@ class PkmnCard extends React.Component {
                       {this.props.name}
                     </h4>
                     <span className="country-region text-secondary">
-                      Wandler - Pokémon
+                      {this.props.genus + " Pokémon"}
                     </span>
                     <br />
                     <span className="country-region text-secondary ">
-                      {"Größe: 1m"}
+                      {"Height: " + this.props.height + "m"}
                     </span>
                     {"\t"}
                     <span className="country-region text-secondary ">
-                      {"Gewicht: 1kg"}
+                      {"Weight: " + this.props.weight + "kg"}
                     </span>
                   </div>
                 </Col>
                 <Col md="auto">
-                  <img
-                    src={dark}
-                    className="type"
-                    alt={this.props.name + " Artwork"}
-                  />
-                  <img
-                    src={poison}
-                    className="type"
-                    alt={this.props.name + " Artwork"}
-                  />
+                  {this.getTypeIcons()}
                 </Col>
               </Row>
               <Row>

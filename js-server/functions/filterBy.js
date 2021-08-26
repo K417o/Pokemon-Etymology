@@ -218,7 +218,7 @@ module.exports = {
           UNION `;
           }
         });
-      } else if (strict == "true"){
+      } else if (strict == "true") {
         reqTypes.map((type, index) => {
           spQuery += `
               ?pokemon poke:hasType poke:Pok��Type:` + type + ` .`;
@@ -265,8 +265,35 @@ module.exports = {
       offset: 0,
     }).then(({ body }) => {
       let data = body.results.bindings;
+      let response = [];
+      let pkmn = {};
+      let types = [];
+      for (let i in data) {
+        for (let j in data[i]) {
+          if (j === "type") {
+            types.push(data[i][j].value.substr(41));
+          } else {
+            pkmn[j] = data[i][j].value;
+            if (j = "genus") {
+              pkmn[j] = data[i][j].value.substr(0, data[i][j].value.length - 9)
+            }
+          }
+        }
 
-      return res.json(data);
+        pkmn["type"] = types;
+
+        if (
+          parseInt(i) + 1 < data.length &&
+          data[(parseInt(i) + 1).toString()].name.value == data[i].name.value
+        ) {
+          console.log(true);
+        } else {
+          response.push(pkmn);
+          pkmn = {};
+          types = [];
+        }
+      }
+      return res.json(response);
     }).catch((err) => {
       res.send(err);
     });

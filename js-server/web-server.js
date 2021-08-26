@@ -40,7 +40,7 @@ app.get("/colours", (req, res) => {
 // get all Pokémonnames
 app.get("/pokemon/all", (req, res) => {
   getAll.pokemon(res);
-}); 
+});
 
 // get Pokémon by their Types .../pokemon/?lang=de&type=Grass&type=Dark
 /**
@@ -58,7 +58,7 @@ app.get("/pokemon", (req, res) => {
   let category = req.query.category; // kann nur eine Kategorie haben --> UNION
   //let origin = req.query.origin; erstmal eh nicht machbar
 
-  let query = filterBy.buildQuery(type, strict, colour, category, res);  
-console.log(query);
+  let query = filterBy.buildQuery(type, strict, colour, category, res);
+  console.log(query);
   filterBy.getResponse(query, res);
 });
