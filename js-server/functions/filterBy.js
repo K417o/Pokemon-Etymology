@@ -12,16 +12,20 @@ const conn = new Connection({
  * hasColour
  * hasGenus@de @en
  * hasHeight
- * hasTYpe
+ * hasType
  * hasWeight
  * label
  * comment --> ist nur en und mit vielen Zeichenfehlern, weglassen daher
- * (origin, Bild)
+ * origin 
+ * pic
  * --> am besten einfach hier mitschicken welche Sprache man haben will, weil sonst einfach jeder mit jedem tanzt
  */
 
 module.exports = {
-  specificName: function (res, pkmnName) {
+  specificName: function (pkmnName) {
+    // Very basic check to prevent injections
+    if (/[:;\\\.\,]/.test(pkmnName)) return null;
+
     const spQuery = `
           PREFIX owl:  <http://www.w3.org/2002/07/owl#>
           PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -30,48 +34,63 @@ module.exports = {
           PREFIX poke: <https://pokemonkg.org/ontology#>
           PREFIX dbpedia:	<http://dbpedia.org/resource/>
           PREFIX qudt: <http://qudt.org/schema/qudt/>
+          PREFIX pokeetym: <urn:pokeetymology:ontology#>
 
-          SELECT ?name ?type ?colour ?genus ?height ?weight where  {
-              ?pkmn rdfs:label "` + pkmnName + `"@` + config.language + ` ;
-                    rdfs:label ?name ;
-                    poke:hasGenus ?genus ;
-                    poke:hasType ?type ;
-                    poke:hasHeight ?qudtH ;
-                    poke:hasWeight ?qudtW ;
-                    poke:hasColour ?colourDbp .     
-                    SERVICE <http://dbpedia.org/sparql>{
-                          ?colourDbp rdfs:label ?colour    
-                    }
-              ?qudtH qudt:quantityValue ?valueH.
-              ?valueH qudt:value ?height .
-              ?qudtW qudt:quantityValue ?valueW.
-              ?valueW qudt:value ?weight .
+
+          SELECT ?name ?type ?colour ?genus ?height ?weight ?origin ?pic ?shape WHERE  {
+            ?pkmn rdfs:label "${pkmnName}"@${config.language} ;
+                  rdfs:label ?name ;
+                  pokeetym:inspiredBy ?origin;
+                  foaf:depiction ?pic;
+                  poke:hasGenus ?genus ;
+                  poke:hasType ?type ;
+                  poke:hasHeight ?qudtH ;
+                  poke:hasWeight ?qudtW ;
+                  poke:hasShape ?shape ;
+                  poke:hasColour ?colour . 
+            ?qudtH qudt:quantityValue ?valueH.
+            ?valueH qudt:value ?height .
+            ?qudtW qudt:quantityValue ?valueW.
+            ?valueW qudt:value ?weight .
+            
+            FILTER(lang(?name)='${config.language}')
+            FILTER(lang(?genus)='${config.language}')
+        }`
     
-              FILTER(lang(?colour)='` + config.language + `')
-              FILTER(lang(?name)='` + config.language + `')
-              FILTER(lang(?genus)='` + config.language + `')
-          }`
-
-    query.execute(conn, config.dbName, spQuery, 'application/sparql-results+json', {
+    return query.execute(conn, config.dbName, spQuery, 'application/sparql-results+json', {
       limit: 1000,
       reasoning: true,
       offset: 0,
     }).then(({ body }) => {
-      let data = body.results.bindings;
-      let response = { name: data[0].name.value };
-      let types = [];
-      for (let i in data) {
-        for (let j in data[i]) {
-          response[j] = data[i][j].value;
-          if (j === "type") {
-            types.push(data[i][j].value.substr(41));
-            response[j] = types;
-          }
+      const data = body.results.bindings;
+      let response = 
+        { 
+          name: data[0].name.value,
+          genus: data[0].genus.value,
+          weight: data[0].weight.value,
+          height: data[0].height.value,
+          colour: data[0].colour.value,
+        };
+      let types = new Set();
+      let origins = new Set();
+
+      for (let result of data) {
+        origins.add(result.origin.value);
+        types.add(result.type.value.substr(40));
+
+        if (/pokewiki/.test(result.shape.value)) {
+          response.shape = result.shape.value;
+        }
+
+        if (/pokewiki/.test(result.pic.value)) {
+          response.image = result.pic.value;
         }
       }
-      return res.json(response);
-    }).catch(err => {
-      res.sendStatus(404)
+
+      response.types = Array.from(types);
+      response.origins = Array.from(origins);
+
+      return response;
     });
 
 
@@ -274,7 +293,7 @@ module.exports = {
             types.push(data[i][j].value.substr(41));
           } else {
             pkmn[j] = data[i][j].value;
-            if (j = "genus") {
+            if (j === "genus") {
               pkmn[j] = data[i][j].value.substr(0, data[i][j].value.length - 9)
             }
           }
