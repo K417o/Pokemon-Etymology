@@ -5,7 +5,8 @@ export const getAll = {
     types,
     categories,
     colours,
-    pokemon
+    pokemon,
+    origins
 };
 
 function types() {
@@ -17,7 +18,16 @@ function types() {
     return fetch(`${config.api_Link}/types`, requestOptions)
         .then(handleResponse)
         .then(data => {
-            return data;
+            let type = [];
+
+            for (let i = 0; i < data.length; i++){
+                if(data[i].charAt(0) === ":"){
+                    type.push(data[i].substring(1));
+                } else {
+                    type.push(data[i]);
+                }
+            }
+            return type;
         })
         .catch(err => {
             console.log(err);
@@ -66,6 +76,28 @@ function pokemon() {
         .then(handleResponse)
         .then(data => {
             return data;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+function origins() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${config.api_Link}/origins`, requestOptions)
+        .then(handleResponse)
+        .then(data => {
+            let origins = [];
+            for (let i in data){
+                if (!!data[i].label && !!data[i].entity){
+                    origins.push(data[i]);
+                }
+            }
+            return origins;
         })
         .catch(err => {
             console.log(err);

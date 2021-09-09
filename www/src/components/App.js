@@ -5,7 +5,7 @@ import { Container, Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './App.css';
-import { MultipleSelect, SingleSelect, PkmnCard } from './index';
+import { MultipleSelect, MultipleLabelKey, SingleSelect, PkmnCard } from './index';
 import { getAll } from '../services/selectData';
 import { filterData } from '../services/filterData';
 
@@ -16,6 +16,7 @@ class App extends React.Component {
     this.colourSelector = React.createRef();
     this.pokemonSelector = React.createRef();
     this.categorySelector = React.createRef();
+    this.originSelector = React.createRef();
 
     this.state = {
       types: [],
@@ -34,8 +35,14 @@ class App extends React.Component {
     let pokemon = this.pokemonSelector.current;
     let categories = this.categorySelector.current;
     let strict = document.getElementById("checkbox").checked;
+    let origins = this.originSelector.current;
 
-    let result = await filterData.getResults(types.state.selected, strict, colours.state.selected, categories.state.selected);
+    let result;
+    if (pokemon.selected?.length > 0) {
+      result = await filterData.getPkmn(pokemon.selected);
+    } else {
+      result = await filterData.getResults(types.state.selected, strict, colours.state.selected, categories.state.selected, origins.state.selected);
+    }
     this.setState({ results: result})
   };
 
@@ -44,7 +51,8 @@ class App extends React.Component {
       types: await getAll.types(),
       categories: await getAll.categories(),
       pokemon: await getAll.pokemon(),
-      colours: await getAll.colours()
+      colours: await getAll.colours(),
+      origins: await getAll.origins()
     })
   }
 
@@ -57,13 +65,32 @@ class App extends React.Component {
     }
 
     for (let i in pkmn) {
+      let origins = [];
+      let click = true;
+      for (let j in pkmn[i].origins){
+        if (!pkmn[i].origins[j].image && !pkmn[i].origins[j].label && !pkmn[i].origins[j].description) {
+        } else {
+          origins.push(pkmn[i].origins[j]);
+        }
+      }
+
+      if (origins.length === 0){
+        click = false;
+      }
+
       cards.push(
         <PkmnCard
           name={pkmn[i].name}
-          type={pkmn[i].type}
+          types={pkmn[i].types}
           height={pkmn[i].height}
           weight={pkmn[i].weight}
           genus={pkmn[i].genus}
+          image={pkmn[i].image}
+          colour={pkmn[i].colour}
+          shape={pkmn[i].shape}
+          origins={pkmn[i].origins}
+          rest={pkmn[i]}
+          click={click}
           key={i}
 
         />)
@@ -98,7 +125,7 @@ class App extends React.Component {
             <Row className="Selects">
               <Col><SingleSelect ref={this.pokemonSelector} options={this.state.pokemon} name={"Pokémon"} /></Col>
               <Col><SingleSelect ref={this.categorySelector} options={this.state.categories} name={"Category"} /></Col>
-              <Col>reservier für Origin Select</Col>
+              <Col><MultipleLabelKey ref={this.originSelector} options={this.state.origins} name={"Origin"}/></Col>
             </Row>
           </Container>
 
