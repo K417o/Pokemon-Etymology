@@ -86,7 +86,7 @@ module.exports = {
 
         for (let result of data) {
           origins.add(result.origin.value);
-          types.add(result.type.value.substr(40));
+          types.add(result.type.value.slice(40));
 
           if (/pokewiki/.test(result.shape.value)) {
             response.shape = result.shape.value;
@@ -103,9 +103,11 @@ module.exports = {
             const originQuery = `SELECT ?label ?description ?pic
           WHERE
           {
-            wd:${origin.substr(32)} rdfs:label ?label .
-            OPTIONAL { wd:${origin.substr(32)} schema:description ?description . }
-            OPTIONAL { wd:${origin.substr(32)} wdt:P18 ?pic . }
+            wd:${origin.slice(32)} rdfs:label ?label .
+            OPTIONAL { wd:${origin.slice(
+              32
+            )} schema:description ?description . }
+            OPTIONAL { wd:${origin.slice(32)} wdt:P18 ?pic . }
             FILTER(LANG(?label) = "${
               config.language
             }" && LANG(?description) = "${config.language}")
@@ -121,11 +123,11 @@ module.exports = {
                 label: wikiRes.data.results.bindings[0].label.value,
                 description: wikiRes.data.results.bindings[0].description.value,
                 image: wikiRes.data.results.bindings[0].pic.value,
-                entity: origin.substr(32),
+                entity: origin.slice(32),
                 entityURI: origin,
               }))
               .catch((_) => ({
-                entity: origin.substr(32),
+                entity: origin.slice(32),
                 entityURI: origin,
               }));
           })
@@ -301,48 +303,49 @@ module.exports = {
           }
         });
 
-        return Promise.all(Array.from(reducedData)
-          .map((keyValuePair) => {
-            const dataSet = keyValuePair[1];
-            return dataSet.reduce(
-              (prev, cur, index) => {
-                if (/pokewiki/.test(cur.shape.value)) {
-                  prev.shape = cur.shape.value;
-                }
-                if (/pokewiki/.test(cur.pic.value)) {
-                  prev.image = cur.pic.value;
-                }
+        return Promise.all(
+          Array.from(reducedData)
+            .map((keyValuePair) => {
+              const dataSet = keyValuePair[1];
+              return dataSet.reduce(
+                (prev, cur, index) => {
+                  if (/pokewiki/.test(cur.shape.value)) {
+                    prev.shape = cur.shape.value;
+                  }
+                  if (/pokewiki/.test(cur.pic.value)) {
+                    prev.image = cur.pic.value;
+                  }
 
-                prev.origins.add(cur.origin.value);
-                prev.types.add(cur.type.value.substr(40));
+                  prev.origins.add(cur.origin.value);
+                  prev.types.add(cur.type.value.slice(40));
 
-                if (index === dataSet.length - 1) {
-                  prev.origins = Array.from(prev.origins);
-                  prev.types = Array.from(prev.types);
+                  if (index === dataSet.length - 1) {
+                    prev.origins = Array.from(prev.origins);
+                    prev.types = Array.from(prev.types);
+                  }
+
+                  return prev;
+                },
+                {
+                  name: dataSet[0].name.value,
+                  genus: dataSet[0].genus.value,
+                  weight: dataSet[0].weight.value,
+                  height: dataSet[0].height.value,
+                  colour: dataSet[0].colour.value.slice(28),
+                  shape: undefined,
+                  image: undefined,
+                  origins: new Set(),
+                  types: new Set(),
                 }
-
-                return prev;
-              },
-              {
-                name: dataSet[0].name.value,
-                genus: dataSet[0].genus.value,
-                weight: dataSet[0].weight.value,
-                height: dataSet[0].height.value,
-                colour: dataSet[0].colour.value.substr(28),
-                shape: undefined,
-                image: undefined,
-                origins: new Set(),
-                types: new Set(),
-              }
-            );
-          })
-          .map(async (pokeData) => {
-            const resolvedOrigins = await Promise.all(
-              Array.from(pokeData.origins).map((origin) => {
-                const originQuery = `SELECT ?pic ?label ?description
+              );
+            })
+            .map(async (pokeData) => {
+              const resolvedOrigins = await Promise.all(
+                Array.from(pokeData.origins).map((origin) => {
+                  const originQuery = `SELECT ?pic ?label ?description
             WHERE
             {
-              wd:${origin.substr(32)} wdt:P18 ?pic ;
+              wd:${origin.slice(32)} wdt:P18 ?pic ;
                          schema:description ?description ;
                          rdfs:label ?label .
               FILTER(LANG(?label) = "${
@@ -350,36 +353,37 @@ module.exports = {
               }" && LANG(?description) = "${config.language}")
             }`;
 
-                return axios
-                  .get(
-                    `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(
-                      originQuery
-                    )}`
-                  )
-                  .then((wikiRes) => ({
-                    label: wikiRes.data.results.bindings[0].label.value,
-                    description:
-                      wikiRes.data.results.bindings[0].description.value,
-                    image: wikiRes.data.results.bindings[0].pic.value,
-                    entity: origin.substr(32),
-                    entityURI: origin,
-                  }))
-                  .catch((_) => ({
-                    entity: origin.substr(32),
-                    entityURI: origin,
-                  }));
-              })
-            );
+                  return axios
+                    .get(
+                      `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(
+                        originQuery
+                      )}`
+                    )
+                    .then((wikiRes) => ({
+                      label: wikiRes.data.results.bindings[0].label.value,
+                      description:
+                        wikiRes.data.results.bindings[0].description.value,
+                      image: wikiRes.data.results.bindings[0].pic.value,
+                      entity: origin.slice(32),
+                      entityURI: origin,
+                    }))
+                    .catch((_) => ({
+                      entity: origin.slice(32),
+                      entityURI: origin,
+                    }));
+                })
+              );
 
-            return {
-              ...pokeData,
-              origins: resolvedOrigins,
-            };
-          }));
+              return {
+                ...pokeData,
+                origins: resolvedOrigins,
+              };
+            })
+        );
       });
 
-      dataCache.set(spQuery, responseData);
+    dataCache.set(spQuery, responseData);
 
-      return responseData;
+    return responseData;
   },
 };

@@ -48,3 +48,14 @@ app.get("/colours", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+// get all the origins which Pokémon can have
+app.get("/origins", async (req, res) => {
+  try {
+    const data = await getAll.origins();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
