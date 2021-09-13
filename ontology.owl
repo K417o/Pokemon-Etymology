@@ -7,39 +7,90 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX wd: <https://www.wikidata.org/entity/> 
 PREFIX owl:  <http://www.w3.org/2002/07/owl#> 
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dcterms: <http://purl.org/dc/elements/1.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX isolang: <https://iso639-3.sil.org/code/>
 
 # Provenance
 
-pokeetym a owl:Ontology ;
-    dcterms:creator [
+<urn:pokeetymology:ontology#> a owl:Ontology ;
+    dc:creator [
                         a foaf:Person ;
                         foaf:name "Tina Wahmkow"
                     ]
-    dcterms:creator [
+    dc:creator [
                         a foaf:Person ;
                         foaf:name "Jonas Wunsch"
                     ]
-    dcterms:contributor [
+    dc:contributor [
                         a foaf:Person ;
                         foaf:name "Andreas Both"
                     ]
-    dcterms:title "Pokemon Origins Ontology"@en ;
-    dcterms:description "An ontology linking pokemon with their real world inspirations through scraped data from pokewiki.de"@en ;
-    dcterms:source <https://pokewiki.de/> ;
+    dc:title "Pokemon Origins Ontology"@en ;
+    dc:description "An ontology linking pokemon with their real world inspirations through scraped data from pokewiki.de"@en ;
+    dc:source <https://pokewiki.de/> ;
     dcterms:issued "2021-09-20"^^xsd:date .
+
+
+# Classes
+
+# Sprachenübersicht:
+# -------------------------
+# isolang:deu - Deutsch
+# isolang:eng - Englisch
+# isolang:fra - Französisch
+# isolang:jpn - Japanisch
+# isolang:kor - Koreanisch
+# isolang:zho - Chinesisch
+
+pokeetym:NamePart a owl:Class ;
+              rdfs:label "Name part"@en ,
+                         "Namensteil"@de ;
+              dc:description "Members of this class are the individual parts that make up pokemon names. They may differ based on their etymology."@en ;
+              dc:description "Mitglieder dieser Klasse sind die einzelnen Bestandteile von Pokemonnamen. Sie könnten sich aufgrund verschiedener Etymologien unterscheiden."@de ;
+
+              
+pokeetym:PokedexId a owl:Class ;
+                rdfs:subClassOf dcterms:identifier ;
+                rdfs:label "Pokedex id"@en ,
+                           "Pokedex-Id"@de ;
+                dc:description "Members of this class are the ids with regards to the national pokedex"@en ;
+                dc:description "Mitglieder dieser Klasse sind die Ids im nationalen Pokedex"@de ;
+
 
 # Properties
 
 pokeetym:inspiredBy rdfs:label "Inspired By"@en ,
-                               "Inspiriert von"@en ;
+                               "Inspiriert von"@de ;
                     rdfs:comment "This property is intended for pokemon and their real life inspirations"@en ;
-                    dcterms:description "This property links the real life inspiration with the respective pokemon"@en
+                    dc:description "This property links pokemon with their inspirations"@en ;
+                    dc:description "Diese Eigenschaft verbindet Pokemon mit ihren Inspirationen"@de ;
                     a rdf:Property ;
                     rdf:type owl:AsymmetricProperty;
                     rdfs:domain poke:Species ;
                     rdfs:range xsd:anyURI ;
                     owl:minCardinality 1 .
+
+pokeetym:hasDexID rdfs:label "Has Pokedex id"@en ,
+                        "Hat Pokedex-Id"@de ;
+             dc:description "This property links pokemon with their respective national pokedex ids"@en ;
+             dc:description "Diese Eigenschaft verbindet Pokemon mit ihren jeweiligen nationalen Pokedex-Ids"@de ;
+             a rdf:Property ;
+             rdf:type owl:AsymmetricProperty ;
+             rdfs:domain poke:Species ;
+             rdfs:range pokeetym:PokedexId ;
+             owl:minCardinality 1 ;
+             owl:maxCardinality 1 .
+
+pokeetym:hasNamePart rdfs:label "Has name part"@en ,
+                           "Hat Namensteil"@de ;
+                dc:description "This property links pokemon with the parts of their names and thus their name's origin"@en ;
+                dc:description "Diese Eigenschaft verbindet Pokemon mit ihren Namensteilen und somit mit den Ursprüngen ihrer Namen"@de ;
+                a rdf:Property ;
+                rdf:type owl:AsymmetricProperty ;
+                rdfs:domain poke:Species ;
+                rdfs:range pokeetym:NamePart ;
+                owl:minCardinality 1 .
 
 # Shapes
 
