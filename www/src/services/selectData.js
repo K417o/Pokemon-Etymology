@@ -43,7 +43,16 @@ function categories() {
     return fetch(`${config.api_Link}/categories`, requestOptions)
         .then(handleResponse)
         .then(data => {
-            return data;
+            let categories = [];
+            for (let i = 0; i < data.length; i++){
+                if (data[i].charAt(data[i].length - 1) === " ") {
+                    categories.push(data[i].substring(0, data[i].length-1))
+                } else {
+                    categories.push(data[i]);
+                }
+            }
+            console.log(categories)
+            return categories;
         })
         .catch(err => {
             console.log(err);

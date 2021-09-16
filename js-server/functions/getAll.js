@@ -79,7 +79,7 @@ module.exports = {
         let response = [];
         for (i in body.results.bindings) {
           let category = body.results.bindings[i].genus.value;
-          response.push(category.slice(0, category.length - 9));
+          response.push(category.slice(0, category.length - 8));
         }
         return response;
       });

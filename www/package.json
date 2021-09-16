@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@appbaseio/react-searchbox": "^1.4.0",
+    "@material-ui/core": "^4.12.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -19,6 +20,7 @@
     "react-scripts": "4.0.3",
     "react-select-country-list": "^2.2.3",
     "react-select-search": "^3.0.8",
+    "react-test-renderer": "^17.0.2",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",

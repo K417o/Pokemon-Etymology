@@ -36,14 +36,13 @@ class App extends React.Component {
     let categories = this.categorySelector.current;
     let strict = document.getElementById("checkbox").checked;
     let origins = this.originSelector.current;
-
     let result;
-    if (pokemon.selected?.length > 0) {
-      result = await filterData.getPkmn(pokemon.selected);
+    if (!!pokemon.state.selected) {
+      result = [await filterData.getPkmn(pokemon.state.selected)];
     } else {
       result = await filterData.getResults(types.state.selected, strict, colours.state.selected, categories.state.selected, origins.state.selected);
     }
-    this.setState({ results: result})
+    this.setState({ results: result })
   };
 
   async componentDidMount() {
@@ -58,44 +57,33 @@ class App extends React.Component {
 
   createCards = () => {
     let cards = [];
-    let pkmn;
 
     if (this.state.results != null) {
-      pkmn = this.state.results;
-    }
+      let pkmn = this.state.results;
+      for (let i in pkmn) {
 
-    for (let i in pkmn) {
-      let origins = [];
-      let click = true;
-      for (let j in pkmn[i].origins){
-        if (!pkmn[i].origins[j].image && !pkmn[i].origins[j].label && !pkmn[i].origins[j].description) {
-        } else {
-          origins.push(pkmn[i].origins[j]);
-        }
+        let click = true;
+
+        cards.push(
+          <PkmnCard
+            name={pkmn[i].name}
+            types={pkmn[i].types}
+            height={pkmn[i].height}
+            weight={pkmn[i].weight}
+            genus={pkmn[i].genus}
+            image={pkmn[i].image}
+            colour={pkmn[i].colour}
+            shape={!!pkmn[i].shape ? pkmn[i].shape.depiction : ""}
+            origins={pkmn[i].origins}
+            rest={pkmn[i]}
+            click={click}
+            key={pkmn[i].name}
+
+          />)
       }
-
-      if (origins.length === 0){
-        click = false;
-      }
-
-      cards.push(
-        <PkmnCard
-          name={pkmn[i].name}
-          types={pkmn[i].types}
-          height={pkmn[i].height}
-          weight={pkmn[i].weight}
-          genus={pkmn[i].genus}
-          image={pkmn[i].image}
-          colour={pkmn[i].colour}
-          shape={pkmn[i].shape}
-          origins={pkmn[i].origins}
-          rest={pkmn[i]}
-          click={click}
-          key={i}
-
-        />)
+    } else {
+      cards.push(<div className="bright-Text">No Results found.</div>)
     }
-
     return cards;
   }
 
@@ -106,7 +94,7 @@ class App extends React.Component {
       <>
         <div className="content">
 
-          <h1>Pokémon-Origins</h1>
+          <h1 className="bright-Text">Pokémon-Origins</h1>
 
           <br />
           <Container>
@@ -114,7 +102,8 @@ class App extends React.Component {
               <Col><MultipleSelect ref={this.typeSelector} options={this.state.types} name={"Types"} />
               </Col>
               <Col md="auto">
-                <Form.Check
+                <Form.Check 
+                className="bright-Text"
                   type={"checkbox"}
                   id={"checkbox"}
                   label={"and"}
@@ -125,7 +114,7 @@ class App extends React.Component {
             <Row className="Selects">
               <Col><SingleSelect ref={this.pokemonSelector} options={this.state.pokemon} name={"Pokémon"} /></Col>
               <Col><SingleSelect ref={this.categorySelector} options={this.state.categories} name={"Category"} /></Col>
-              <Col><MultipleLabelKey ref={this.originSelector} options={this.state.origins} name={"Origin"}/></Col>
+              <Col><MultipleLabelKey ref={this.originSelector} options={this.state.origins} name={"Origin"} /></Col>
             </Row>
           </Container>
 

@@ -3,20 +3,31 @@ import './cards.css';
 import { typeIcons } from '../images/type-icons';
 import Collapse from 'react-bootstrap/Collapse';
 import { Container } from 'react-bootstrap';
+import { NameTable } from '..';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import { filterData } from '../../services/filterData';
+import missingno from '../images/MissingNo.webp';
 
 class PkmnCard extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      infos: {},
+      click: this.props.click
     }
     this.getTypeIcons = this.getTypeIcons.bind(this);
     this.createOriginCards = this.createOriginCards.bind(this);
+  }
+
+  async componentDidMount() {
+    this.setState({
+      infos: await filterData.getPkmn(this.props.name)
+    });
   }
 
   getTypeIcons = () => {
@@ -27,7 +38,7 @@ class PkmnCard extends React.Component {
           <img
             src={typeIcons[type]}
             className="type"
-            alt={this.props.name + " Artwork"}
+            alt={type + " Icon"}
           />
         );
       });
@@ -36,39 +47,54 @@ class PkmnCard extends React.Component {
     return icons;
   }
 
+
   createOriginCards = () => {
-    let origins = [];
-    if (!!this.props.origins) {
-      for (let i = 0; i < this.props.origins.length; i++) {
-        if (!this.props.origins[i].image && !this.props.origins[i].label && !this.props.origins[i].description) {
-          
+    let originsCards = [];
+
+    let origin = this.state.infos?.origins;
+    if (!!origin) {
+      for (let i = 0; i < origin.length; i++) {
+        let refs = [];
+        if (!origin[i].image && !origin[i].label && !origin[i].description) {
+          //this.setState({ click: false });
         } else {
-          origins.push(
+          for (let r of origin[i].externalRefs) {
+            refs.push(<><small className="text-muted"><a href={r.externalURI} target="_blank" rel="noreferrer"> {r.externalURI.match(/https?:\/\/([\w\.-]*)\//)?.[1]} </a></small><br /></>)
+          }
+          originsCards.push(
             <Card>
-              <Card.Img variant="top" src={this.props.origins[i].image} className="origin-pic" />
+              <Card.Img variant="top" src={!!origin[i].image ? origin[i].image : missingno} className="origin-pic" />
               <Card.Body>
-                <Card.Title>{this.props.origins[i].label}</Card.Title>
+                <Card.Title>{origin[i].label}</Card.Title>
                 <Card.Text>
-                  {this.props.origins[i].description}
+                  {origin[i].description}
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
-                <small className="text-muted"><a href={this.props.origins[i].entityURI} target="_blank" rel="noreferrer"> get more information... </a></small>
+                <small className="text-muted"><strong>get more information:</strong></small> <br />
+                {refs}
               </Card.Footer>
             </Card>
           )
         }
       }
     }
-    return origins;
+    return originsCards;
   }
 
   render() {
+    let nameTable;
+
     return (
       <Fragment>
         <div
-          className={"pkmn-card clickable_"+this.props.click}
-          onClick={() => { this.setState({ open: !this.state.open }) }}
+          className={"pkmn-card clickable_" + this.state.click}
+          onClick={() => {
+            this.setState({
+              open: !this.state.open,
+              click: !this.state.click
+            })
+          }}
           aria-controls={"example-collapse-text-" + this.props.name}
           aria-expanded={this.state.open}>
           <div
@@ -116,9 +142,14 @@ class PkmnCard extends React.Component {
               </Row>
               <Row>
                 <Collapse in={this.state.open}>
-                  <CardGroup>
-                    {this.createOriginCards()}
-                  </CardGroup>
+                  <div>
+                    <NameTable
+                      nameParts={this.state.infos?.nameParts}
+                    ></NameTable>
+                    <CardGroup>
+                      {this.createOriginCards()}
+                    </CardGroup>
+                  </div>
                 </Collapse>
 
               </Row>

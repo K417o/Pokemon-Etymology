@@ -1,0 +1,907 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SnapshotTest App 1`] = `
+Array [
+  <div
+    className="content"
+  >
+    <h1
+      className="bright-Text"
+    >
+      Pokémon-Origins
+    </h1>
+    <br />
+    <div
+      className="container"
+    >
+      <div
+        className="Selects row"
+      >
+        <div
+          className="col"
+        >
+          <div>
+            <div
+              className="rbt"
+              style={
+                Object {
+                  "outline": "none",
+                  "position": "relative",
+                }
+              }
+              tabIndex={-1}
+            >
+              <div
+                className="rbt-input-multi form-control rbt-input"
+                onClick={[Function]}
+                onFocus={[Function]}
+                tabIndex={-1}
+              >
+                <div
+                  className="rbt-input-wrapper"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "flex",
+                        "flex": 1,
+                        "height": "100%",
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-haspopup="listbox"
+                      autoComplete="off"
+                      className="rbt-input-main"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Choose one or more Pokémon-Types..."
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "border": 0,
+                          "boxShadow": "none",
+                          "cursor": "inherit",
+                          "outline": "none",
+                          "padding": 0,
+                          "width": "100%",
+                          "zIndex": 1,
+                        }
+                      }
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden={true}
+                      className="rbt-input-hint"
+                      readOnly={true}
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "boxShadow": "none",
+                          "color": "rgba(0, 0, 0, 0.54)",
+                          "left": 0,
+                          "pointerEvents": "none",
+                          "position": "absolute",
+                          "top": 0,
+                          "width": "100%",
+                        }
+                      }
+                      tabIndex={-1}
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="col-md-auto"
+        >
+          <div
+            className="bright-Text form-check"
+          >
+            <input
+              className="form-check-input"
+              disabled={false}
+              id="checkbox"
+              type="checkbox"
+            />
+            <label
+              className="form-check-label"
+              htmlFor="checkbox"
+              title=""
+            >
+              and
+            </label>
+          </div>
+        </div>
+        <div
+          className="col"
+        >
+          <div>
+            <div
+              className="rbt"
+              style={
+                Object {
+                  "outline": "none",
+                  "position": "relative",
+                }
+              }
+              tabIndex={-1}
+            >
+              <div
+                className="rbt-input-multi form-control rbt-input"
+                onClick={[Function]}
+                onFocus={[Function]}
+                tabIndex={-1}
+              >
+                <div
+                  className="rbt-input-wrapper"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "flex",
+                        "flex": 1,
+                        "height": "100%",
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-haspopup="listbox"
+                      autoComplete="off"
+                      className="rbt-input-main"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Choose one or more Pokémon-Colours..."
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "border": 0,
+                          "boxShadow": "none",
+                          "cursor": "inherit",
+                          "outline": "none",
+                          "padding": 0,
+                          "width": "100%",
+                          "zIndex": 1,
+                        }
+                      }
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden={true}
+                      className="rbt-input-hint"
+                      readOnly={true}
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "boxShadow": "none",
+                          "color": "rgba(0, 0, 0, 0.54)",
+                          "left": 0,
+                          "pointerEvents": "none",
+                          "position": "absolute",
+                          "top": 0,
+                          "width": "100%",
+                        }
+                      }
+                      tabIndex={-1}
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="Selects row"
+      >
+        <div
+          className="col"
+        >
+          <div>
+            <div
+              className="rbt"
+              style={
+                Object {
+                  "outline": "none",
+                  "position": "relative",
+                }
+              }
+              tabIndex={-1}
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "flex": 1,
+                    "height": "100%",
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  aria-autocomplete="both"
+                  aria-expanded={false}
+                  aria-haspopup="listbox"
+                  autoComplete="off"
+                  className="rbt-input-main form-control rbt-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Choose one Pokémon"
+                  role="combobox"
+                  type="text"
+                  value=""
+                />
+                <input
+                  aria-hidden={true}
+                  className="rbt-input-hint"
+                  readOnly={true}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderColor": "transparent",
+                      "boxShadow": "none",
+                      "color": "rgba(0, 0, 0, 0.54)",
+                      "left": 0,
+                      "pointerEvents": "none",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={-1}
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="col"
+        >
+          <div>
+            <div
+              className="rbt"
+              style={
+                Object {
+                  "outline": "none",
+                  "position": "relative",
+                }
+              }
+              tabIndex={-1}
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "flex": 1,
+                    "height": "100%",
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  aria-autocomplete="both"
+                  aria-expanded={false}
+                  aria-haspopup="listbox"
+                  autoComplete="off"
+                  className="rbt-input-main form-control rbt-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Choose one Category"
+                  role="combobox"
+                  type="text"
+                  value=""
+                />
+                <input
+                  aria-hidden={true}
+                  className="rbt-input-hint"
+                  readOnly={true}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderColor": "transparent",
+                      "boxShadow": "none",
+                      "color": "rgba(0, 0, 0, 0.54)",
+                      "left": 0,
+                      "pointerEvents": "none",
+                      "position": "absolute",
+                      "top": 0,
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={-1}
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="col"
+        >
+          <div>
+            <div
+              className="rbt"
+              style={
+                Object {
+                  "outline": "none",
+                  "position": "relative",
+                }
+              }
+              tabIndex={-1}
+            >
+              <div
+                className="rbt-input-multi form-control rbt-input"
+                onClick={[Function]}
+                onFocus={[Function]}
+                tabIndex={-1}
+              >
+                <div
+                  className="rbt-input-wrapper"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "flex",
+                        "flex": 1,
+                        "height": "100%",
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-haspopup="listbox"
+                      autoComplete="off"
+                      className="rbt-input-main"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Choose one or more Pokémon-Origin..."
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "border": 0,
+                          "boxShadow": "none",
+                          "cursor": "inherit",
+                          "outline": "none",
+                          "padding": 0,
+                          "width": "100%",
+                          "zIndex": 1,
+                        }
+                      }
+                      type="text"
+                      value=""
+                    />
+                    <input
+                      aria-hidden={true}
+                      className="rbt-input-hint"
+                      readOnly={true}
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "boxShadow": "none",
+                          "color": "rgba(0, 0, 0, 0.54)",
+                          "left": 0,
+                          "pointerEvents": "none",
+                          "position": "absolute",
+                          "top": 0,
+                          "width": "100%",
+                        }
+                      }
+                      tabIndex={-1}
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <button
+      className="glow-on-hover"
+      onClick={[Function]}
+      type="button"
+    >
+      Search for matches
+    </button>
+    <div
+      className="flex-container"
+      id="Cards"
+    >
+      <div
+        className="bright-Text"
+      >
+        No Results found.
+      </div>
+    </div>
+  </div>,
+  <div
+    class="spacer layer1"
+  />,
+]
+`;
+
+exports[`SnapshotTest MultipleLabelKey 1`] = `
+<div>
+  <div
+    className="rbt"
+    style={
+      Object {
+        "outline": "none",
+        "position": "relative",
+      }
+    }
+    tabIndex={-1}
+  >
+    <div
+      className="rbt-input-multi form-control rbt-input"
+      onClick={[Function]}
+      onFocus={[Function]}
+      tabIndex={-1}
+    >
+      <div
+        className="rbt-input-wrapper"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flex": 1,
+              "height": "100%",
+              "position": "relative",
+            }
+          }
+        >
+          <input
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            autoComplete="off"
+            className="rbt-input-main"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            placeholder="Choose one or more Pokémon-Pokémon..."
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "border": 0,
+                "boxShadow": "none",
+                "cursor": "inherit",
+                "outline": "none",
+                "padding": 0,
+                "width": "100%",
+                "zIndex": 1,
+              }
+            }
+            type="text"
+            value=""
+          />
+          <input
+            aria-hidden={true}
+            className="rbt-input-hint"
+            readOnly={true}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "borderColor": "transparent",
+                "boxShadow": "none",
+                "color": "rgba(0, 0, 0, 0.54)",
+                "left": 0,
+                "pointerEvents": "none",
+                "position": "absolute",
+                "top": 0,
+                "width": "100%",
+              }
+            }
+            tabIndex={-1}
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SnapshotTest MultipleSelect 1`] = `
+<div>
+  <div
+    className="rbt"
+    style={
+      Object {
+        "outline": "none",
+        "position": "relative",
+      }
+    }
+    tabIndex={-1}
+  >
+    <div
+      className="rbt-input-multi form-control rbt-input"
+      onClick={[Function]}
+      onFocus={[Function]}
+      tabIndex={-1}
+    >
+      <div
+        className="rbt-input-wrapper"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flex": 1,
+              "height": "100%",
+              "position": "relative",
+            }
+          }
+        >
+          <input
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            autoComplete="off"
+            className="rbt-input-main"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            placeholder="Choose one or more Pokémon-Pokémon..."
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "border": 0,
+                "boxShadow": "none",
+                "cursor": "inherit",
+                "outline": "none",
+                "padding": 0,
+                "width": "100%",
+                "zIndex": 1,
+              }
+            }
+            type="text"
+            value=""
+          />
+          <input
+            aria-hidden={true}
+            className="rbt-input-hint"
+            readOnly={true}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "borderColor": "transparent",
+                "boxShadow": "none",
+                "color": "rgba(0, 0, 0, 0.54)",
+                "left": 0,
+                "pointerEvents": "none",
+                "position": "absolute",
+                "top": 0,
+                "width": "100%",
+              }
+            }
+            tabIndex={-1}
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SnapshotTest NameTable 1`] = `
+<table
+  className="table table-striped table-bordered table-hover"
+>
+  <thead>
+    <tr>
+      <th>
+        Language
+      </th>
+      <th>
+        Name and Explanation
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        German
+      </td>
+      <td>
+        <span
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title={null}
+        >
+          Abrakadabra
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        English
+      </td>
+      <td>
+        <span
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title={null}
+        >
+          Abrakadabra
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Japanese
+      </td>
+      <td>
+        <span
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title={null}
+        >
+          Edgar Cayce
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        French
+      </td>
+      <td>
+        <span
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title={null}
+        >
+          Abrakadabra
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Korean
+      </td>
+      <td>
+        <span>
+          Aus dem Japanischen übernommen.
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Chinese
+      </td>
+      <td>
+        <span>
+          Phonetische Übersetzung aus dem Japanischen.
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`SnapshotTest PkmnCard 1`] = `
+<div
+  aria-controls="example-collapse-text-Abra"
+  aria-expanded={false}
+  className="pkmn-card clickable_true"
+  onClick={[Function]}
+>
+  <div
+    className="pkmn-card-container border-gray rounded border mx-2 my-3 d-flex flex-row align-items-center p-0 bg-light"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="main-Info-row row"
+      >
+        <div
+          className="col-md-auto"
+        >
+          <img
+            alt="Abra Artwork"
+            className="d-block original-pic"
+            src="https://www.pokewiki.de/images/thumb/4/44/Sugimori_063.png/250px-Sugimori_063.png"
+          />
+        </div>
+        <div
+          className="col"
+        >
+          <div
+            className="px-3 details"
+          >
+            <h4>
+              Abra
+            </h4>
+            <span
+              className="country-region text-secondary"
+            >
+              Psi Pokémon
+            </span>
+            <br />
+            <span
+              className="country-region text-secondary "
+            >
+              Height: 0.9m
+            </span>
+            	
+            <span
+              className="country-region text-secondary "
+            >
+              Weight: 19.5kg
+            </span>
+          </div>
+        </div>
+        <div
+          className="pkmn-icons col-md-auto"
+        >
+          <div>
+            <img
+              alt="Psychic Icon"
+              className="type"
+              src="Pokémon_Psychic_Type_Icon.svg"
+            />
+          </div>
+          <div>
+            <img
+              alt="Abra-shape"
+              className="shape"
+              src="https://www.pokewiki.de/images/thumb/0/07/Silhouette_6_HOME.png/24px-Silhouette_6_HOME.png"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          aria-expanded={null}
+          className="collapse"
+        >
+          <table
+            className="table table-striped table-bordered table-hover"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Language
+                </th>
+                <th>
+                  Name and Explanation
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+          <div
+            className="card-group"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SnapshotTest SingleSelect 1`] = `
+<div>
+  <div
+    className="rbt"
+    style={
+      Object {
+        "outline": "none",
+        "position": "relative",
+      }
+    }
+    tabIndex={-1}
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": 1,
+          "height": "100%",
+          "position": "relative",
+        }
+      }
+    >
+      <input
+        aria-autocomplete="both"
+        aria-expanded={false}
+        aria-haspopup="listbox"
+        autoComplete="off"
+        className="rbt-input-main form-control rbt-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Choose one Pokémon"
+        role="combobox"
+        type="text"
+        value=""
+      />
+      <input
+        aria-hidden={true}
+        className="rbt-input-hint"
+        readOnly={true}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "borderColor": "transparent",
+            "boxShadow": "none",
+            "color": "rgba(0, 0, 0, 0.54)",
+            "left": 0,
+            "pointerEvents": "none",
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
+          }
+        }
+        tabIndex={-1}
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
