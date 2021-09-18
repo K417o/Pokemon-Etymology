@@ -44,30 +44,31 @@ module.exports = {
     
     
     SELECT ?name ?type ?colour ?genus ?height ?weight ?origin ?pic ?shape ?shapeImage ?dexId ?namePartTitle ?namePartPosInName ?namePartLang ?namePartDescription WHERE  {
-        ?pkmn foaf:name ?name ;
-        pokeetym:inspiredBy ?origin;
-        pokeetym:hasDexID ?dexIdEnt ;
-        pokeetym:hasNamePart ?namePart ;
-        foaf:depiction ?pic;
-        poke:hasGenus ?genus ;
-        poke:hasType ?type ;
-        poke:hasHeight ?qudtH ;
-        poke:hasWeight ?qudtW ;
-        poke:hasShape ?shape ;
-        poke:hasColour ?colour . 
-        ?qudtH qudt:quantityValue ?valueH.
-        ?valueH qudt:value ?height .
-        ?qudtW qudt:quantityValue ?valueW.
-        ?valueW qudt:value ?weight .
-        ?namePart pokeetym:positionInName ?namePartPosInName ;
-          dc:language ?namePartLang ;
-          dc:title ?namePartTitle .
-        OPTIONAL { ?namePart dc:description ?namePartDescription . }
-        ?dexIdEnt rdfs:label ?dexId .
-        ?shape foaf:depiction ?shapeImage .
+        ?pkmn rdfs:label ?label ;
+          foaf:name ?name ;
+          pokeetym:inspiredBy ?origin ;
+          pokeetym:hasDexID ?dexIdEnt ;
+          pokeetym:hasNamePart ?namePart ;
+          foaf:depiction ?pic;
+          poke:hasGenus ?genus ;
+          poke:hasType ?type ;
+          poke:hasHeight ?qudtH ;
+          poke:hasWeight ?qudtW ;
+          poke:hasShape ?shape ;
+          poke:hasColour ?colour . 
+          ?qudtH qudt:quantityValue ?valueH.
+          ?valueH qudt:value ?height .
+          ?qudtW qudt:quantityValue ?valueW.
+          ?valueW qudt:value ?weight .
+          ?namePart pokeetym:positionInName ?namePartPosInName ;
+            dc:language ?namePartLang ;
+            dc:title ?namePartTitle .
+          OPTIONAL { ?namePart dc:description ?namePartDescription . }
+          ?dexIdEnt rdfs:label ?dexId .
+          ?shape foaf:depiction ?shapeImage .
         
-        FILTER (lcase(str(?name)) = "${pkmnName}")
-        FILTER(lang(?name)='${config.language}')
+        FILTER (lcase(str(?label)) = "${pkmnName}")
+        FILTER(lang(?label)='${config.language}')
         FILTER(lang(?genus)='${config.language}')
     }`;
 
@@ -86,7 +87,7 @@ module.exports = {
       .then(async ({ body }) => {
         const data = body.results.bindings;
         let response = {
-          name: data[0].name.value,
+          name: undefined,
           genus: data[0].genus.value,
           weight: data[0].weight.value,
           height: data[0].height.value,
@@ -102,6 +103,16 @@ module.exports = {
         let origins = new Set();
         let nameParts = new Set();
         let languages = new Set();
+        let names = new Set();
+
+        const languageURIMappings = {
+          zh: "zho",
+          en: "eng",
+          de: "deu",
+          ja: "jpn",
+          ko: "kor",
+          fr: "fra",
+        };
 
         for (let result of data) {
           origins.add(result.origin.value);
@@ -118,6 +129,10 @@ module.exports = {
             })
           );
           languages.add(result.namePartLang.value);
+          names.add({
+            lang: languageURIMappings[result.name["xml:lang"]],
+            value: result.name.value,
+          });
 
           if (/pokewiki/.test(result.pic.value)) {
             response.image = result.pic.value;
@@ -131,24 +146,33 @@ module.exports = {
 
         // Group by language
         Array.from(languages).forEach(
-          (lang) => (response.nameParts[lang.slice(30)] = [])
+          (lang) => (response.nameParts[lang.slice(30)] = {
+            parts: [],
+          })
         );
         parsedNameParts.forEach((namePart) =>
-          response.nameParts[namePart.language.slice(30)].push(namePart)
+          response.nameParts[namePart.language.slice(30)].parts.push(namePart)
         );
 
         // Sort by position in name within language groups
         Array.from(languages).forEach((lang) =>
-          response.nameParts[lang.slice(30)].sort(
+          response.nameParts[lang.slice(30)].parts.sort(
             (p1, p2) => p1.positionInName - p2.positionInName
           )
         );
 
+        // Add full names to nameParts object
+        Array.from(names).forEach((fullName) => {
+          if (fullName.lang === languageURIMappings[config.language])
+            response.name = fullName.value;
+          response.nameParts[fullName.lang].fullName = fullName.value;
+        });
+
         response.origins = await Promise.all(
           Array.from(origins).map((origin) => {
             const originQuery = `SELECT ?label ?description ?pic ?externalRef ?externalSource WHERE
-            {
-              wd:${origin.slice(32)} rdfs:label ?label .
+              {
+                wd:${origin.slice(32)} rdfs:label ?label .
               {
                 SELECT ?externalRef ?externalSource WHERE
                 {
@@ -162,16 +186,16 @@ module.exports = {
               OPTIONAL { wd:${origin.slice(
                 32
               )} schema:description ?description . }
-              {
-                SELECT ?pic WHERE {
-                OPTIONAL { wd:${origin.slice(32)} wdt:P18 ?pic . }
+                {
+                  SELECT ?pic WHERE {
+                    OPTIONAL { wd:${origin.slice(32)} wdt:P18 ?pic . }
+                  }
+                  LIMIT 1
                 }
-                LIMIT 1
-              }
-              FILTER(LANG(?label) = "${
-                config.language
-              }" && LANG(?description) = "${config.language}") 
-            }`;
+                FILTER(LANG(?label) = "${
+                  config.language
+                }" && LANG(?description) = "${config.language}") 
+              }`;
 
             return axios
               .get(
