@@ -63,7 +63,9 @@ class PkmnCard extends React.Component {
           }
           originsCards.push(
             <Card>
-              <Card.Img variant="top" src={!!origin[i].image ? origin[i].image : missingno} className="origin-pic" />
+              <a href={origin[i].entityURI} target="_blank" rel="noreferrer">
+                <Card.Img variant="top" src={!!origin[i].image ? origin[i].image : missingno} className="origin-pic" />
+              </a>
               <Card.Body>
                 <Card.Title>{origin[i].label}</Card.Title>
                 <Card.Text>
@@ -112,7 +114,7 @@ class PkmnCard extends React.Component {
                 <Col>
                   <div className="px-3 details">
                     <h4>
-                      {this.props.name}
+                      {this.props.name}&nbsp;&nbsp;{this.state.infos?.pokedexId}
                     </h4>
                     <span className="country-region text-secondary">
                       {this.props.genus}
@@ -121,7 +123,7 @@ class PkmnCard extends React.Component {
                     <span className="country-region text-secondary ">
                       {"Height: " + this.props.height + "m"}
                     </span>
-                    {"\t"}
+                    &nbsp;&nbsp;
                     <span className="country-region text-secondary ">
                       {"Weight: " + this.props.weight + "kg"}
                     </span>

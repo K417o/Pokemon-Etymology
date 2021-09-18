@@ -81,7 +81,7 @@ class App extends React.Component {
           />)
       }
     } else {
-      cards.push(<div className="bright-Text">No Results found.</div>)
+      cards.push(<div className="bright-Text"><br />No Results found.</div>)
     }
     return cards;
   }
@@ -126,7 +126,7 @@ class App extends React.Component {
             onClick={this.getData.bind(this)}>
             Search for matches
           </button>
-
+          
 
           <div id="Cards" className="flex-container">
             {this.createCards()}
