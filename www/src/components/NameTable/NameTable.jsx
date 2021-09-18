@@ -35,13 +35,13 @@ class NameTable extends React.Component {
 
       let nameParts = [];
       let index = 1;
-      for (let part of this.props.nameParts[lang]) {
+      for (let part of this.props.nameParts[lang].parts) {
 
         if (part.description == null) {
           nameParts.push(
             <span>{part.title}</span>);
 
-          if (index < this.props.nameParts[lang].length && this.props.nameParts[lang].length > 1) {
+          if (index < this.props.nameParts[lang].parts.length && this.props.nameParts[lang].parts.length > 1) {
             nameParts.push(<span>&nbsp;+&nbsp;</span>);
           }
         } else {
@@ -70,6 +70,7 @@ class NameTable extends React.Component {
       tbody.push(
         <tr>
           <td>{language}</td>
+          <td>{this.props.nameParts[lang].fullName}</td>
           <td>{nameParts}</td>
         </tr>)
 
@@ -85,7 +86,8 @@ class NameTable extends React.Component {
           <thead>
             <tr>
               <th>Language</th>
-              <th>Name and Explanation</th>
+              <th>Full Name</th>
+              <th>Explanation</th>
             </tr>
           </thead>
           <tbody>
