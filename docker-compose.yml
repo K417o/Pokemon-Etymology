@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+    backend:
+        build:
+          context: ./js-server
+        restart: always
+        expose:
+            - "8080"
+        networks: 
+          - pokenetwork
+
+    frontend:
+        restart: always
+        build:
+            context: ./www
+        expose:
+            - "3000"
+        networks: 
+          - pokenetwork
+
+    nginx:
+        restart: always
+        build:
+            context: ./nginx
+        ports:
+            - "40999:443"
+        networks: 
+          - pokenetwork
+            
+networks:
+  pokenetwork:
+    driver: bridge
