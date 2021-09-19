@@ -93,7 +93,7 @@ class App extends React.Component {
       <>
         <div className="content">
 
-          <h1 className="bright-Text">Pokémon-Origins</h1>
+          <h1 className="bright-Text">Pokémon-Etymology</h1>
 
           <br />
           <Container>

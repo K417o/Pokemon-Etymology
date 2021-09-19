@@ -27,12 +27,27 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .layer1 {
   background-image: url('./images/layered-waves.svg');
 }
 
+@media only screen and (max-width: 692px){
+  .spacer {
+    aspect-ratio: 3/4;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    object-fit: contain;
+  }
+  .layer1 {
+    background-image: url('./images/layered-waves-haikei_portrait.svg');
+  }
+}
 
 
 #Cards {
