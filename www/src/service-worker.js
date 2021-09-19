@@ -69,4 +69,68 @@ self.addEventListener('message', (event) => {
   }
 });
 
+var CACHE_NAME = 'static-cache'
+var CACHE_VERSION = 'v1'
+const PUBLIC_URL = process.env.PUBLIC_URL
+var urlsToCache = [PUBLIC_URL + '/']
+
+self.addEventListener('install', function (event) {
+  // Perform install steps
+  console.log('installed')
+  event.waitUntil(
+    caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then(function (cache) {
+      return cache.addAll(urlsToCache)
+    })
+  )
+})
+
+self.addEventListener('activate', event => {
+  console.log('activated')
+  event.waitUntil(
+    caches.keys().then(keyList => {
+      return Promise.all(
+        keyList.map(key => {
+          if (key.indexOf(CACHE_NAME) !== -1) {
+            if (key.indexOf(CACHE_VERSION) === -1) {
+              return caches.delete(key)
+            }
+          }
+        })
+      )
+    })
+  )
+})
+
+self.addEventListener('fetch', function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      // Cache hit - return response
+      if (!!response) {
+        return response
+      }
+      return fetch(event.request).then(function (newResponse) {
+        // Check if we received a valid response
+        if (
+          !newResponse ||
+          newResponse.status !== 200 ||
+          newResponse.type !== 'basic'
+        ) {
+          return newResponse
+        }
+
+        // IMPORTANT: Clone the response. A response is a stream
+        // and because we want the browser to consume the response
+        // as well as the cache consuming the response, we need
+        // to clone it so we have two streams.
+        var responseToCache = newResponse.clone()
+
+        caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then(function (cache) {
+          cache.put(event.request, responseToCache)
+        })
+        return newResponse
+      })
+    })
+  )
+})
+
 // Any other custom service worker logic can go here.

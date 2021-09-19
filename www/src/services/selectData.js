@@ -51,7 +51,6 @@ function categories() {
                     categories.push(data[i]);
                 }
             }
-            console.log(categories)
             return categories;
         })
         .catch(err => {
