@@ -134,7 +134,7 @@ class App extends React.Component {
 
 
         </div>
-        <div class="spacer layer1">
+        <div className="spacer layer1">
         </div>
       </>
     );

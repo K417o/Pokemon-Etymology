@@ -35,17 +35,16 @@ class NameTable extends React.Component {
 
       let nameParts = [];
       let index = 1;
-      for (let part of this.props.nameParts[lang]) {
-
+      for (let part of this.props.nameParts[lang].parts) {
         if (part.description == null) {
           nameParts.push(
             <span>{part.title}</span>);
 
-          if (index < this.props.nameParts[lang].length && this.props.nameParts[lang].length > 1) {
+          if (index < this.props.nameParts[lang].parts.length && this.props.nameParts[lang].parts.length > 1) {
             nameParts.push(<span>&nbsp;+&nbsp;</span>);
           }
         } else {
-          if (part.description.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)?.[1]) {
+          if (part.description.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/)?.[1]) {
             nameParts.push(
               <Tooltip title={<Fragment><a href={part.description} className="tooltip-link" target="_blank" rel="noreferrer">{part.description}</a></Fragment>} interactive>
                 <span>{part.title}</span>
@@ -58,7 +57,7 @@ class NameTable extends React.Component {
           }
           
 
-          if (index < this.props.nameParts[lang].length && this.props.nameParts[lang].length > 1) {
+          if (index < this.props.nameParts[lang].parts.length && this.props.nameParts[lang].parts.length > 1) {
             nameParts.push(<span>&nbsp;+&nbsp;</span>);
           }
 
@@ -70,6 +69,7 @@ class NameTable extends React.Component {
       tbody.push(
         <tr>
           <td>{language}</td>
+          <td>{this.props.nameParts[lang].fullName}</td>
           <td>{nameParts}</td>
         </tr>)
 
@@ -85,7 +85,8 @@ class NameTable extends React.Component {
           <thead>
             <tr>
               <th>Language</th>
-              <th>Name and Explanation</th>
+              <th>Full Name</th>
+              <th>Explanation</th>
             </tr>
           </thead>
           <tbody>
