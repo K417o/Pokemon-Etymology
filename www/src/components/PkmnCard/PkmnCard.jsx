@@ -33,7 +33,7 @@ class PkmnCard extends React.Component {
   getTypeIcons = () => {
     let icons = []
     if (!!this.props.types) {
-      this.props.types.map((type) => {
+      for (let type of this.props.types) {
         icons.push(
           <img
             src={typeIcons[type]}
@@ -41,7 +41,7 @@ class PkmnCard extends React.Component {
             alt={type + " Icon"}
           />
         );
-      });
+      }
     }
 
     return icons;
@@ -59,7 +59,7 @@ class PkmnCard extends React.Component {
           //this.setState({ click: false });
         } else {
           for (let r of origin[i].externalRefs) {
-            refs.push(<><small className="text-muted"><a href={r.externalURI} target="_blank" rel="noreferrer"> {r.externalURI.match(/https?:\/\/([\w\.-]*)\//)?.[1]} </a></small><br /></>)
+            refs.push(<><small className="text-muted"><a href={r.externalURI} target="_blank" rel="noreferrer"> {r.externalURI.match(/https?:\/\/([\w.-]*)\//)?.[1]} </a></small><br /></>)
           }
           originsCards.push(
             <Card>
@@ -85,8 +85,6 @@ class PkmnCard extends React.Component {
   }
 
   render() {
-    let nameTable;
-
     return (
       <Fragment>
         <div
@@ -147,6 +145,7 @@ class PkmnCard extends React.Component {
                   <div>
                     <NameTable
                       nameParts={this.state.infos?.nameParts}
+                      key={this.props.name}
                     ></NameTable>
                     <CardGroup>
                       {this.createOriginCards()}
